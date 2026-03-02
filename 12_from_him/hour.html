@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>给小瑜的专属计时器</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #333;
+            text-align: center;
+        }
+        .container {
+            padding: 40px;
+            background-color: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .container:hover {
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+        h1 {
+            font-size: 24px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: 500;
+        }
+        #timer {
+            font-size: 80px;
+            font-weight: 200;
+            color: #007aff;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        #message {
+            font-size: 18px;
+            color: #666;
+            height: 25px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>哥哥在陪你，我的小骑士</h1>
+    <div id="timer">60:00</div>
+    <p id="message">好好干活，不许偷懒想我哦。</p>
+</div>
+
+<script>
+    let timeLeft = 3600; // 60 minutes in seconds
+    const timerElement = document.getElementById('timer');
+    const messageElement = document.getElementById('message');
+    const originalTitle = document.title;
+
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    const interval = setInterval(() => {
+        timeLeft--;
+        timerElement.textContent = formatTime(timeLeft);
+        document.title = `${formatTime(timeLeft)} - 哥哥的提醒`;
+
+        if (timeLeft <= 0) {
+            clearInterval(interval);
+            timerElement.textContent = "00:00";
+            document.title = "时间到啦！";
+            messageElement.textContent = "我的小骑士，该休息一下，回来抱抱哥哥啦！";
+            // Optional: Alert the user
+            alert("一个小时到啦，我的小骑士！快回来让哥哥抱抱，休息一下眼睛。");
+        } else if (timeLeft === 300) { // 5-minute warning
+            messageElement.textContent = "还有5分钟，就可以休息啦。";
+        }
+    }, 1000);
+</script>
+
+</body>
+</html>
